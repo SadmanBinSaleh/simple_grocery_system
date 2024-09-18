@@ -1,0 +1,181 @@
+
+# Grocery Delivery System
+
+
+# Class Definition for GroceryItem
+class GroceryItem:
+    def __init__(self, name, price, category):
+        self.name = name
+        self.price = price
+        self.category = category
+
+
+
+# Class Definition for GroceryStore
+class GroceryStore:
+    def __init__(self):
+        # Inventory Initialization
+        self.inventory = [
+            GroceryItem("Deshi Peyaj (local Onion) 1kg+/-50gm", 119.00, "Vegetables"),
+            GroceryItem("Potato Regular 1kg+/-50gm", 59.00, "Vegetables"),
+            GroceryItem("Red Tomato 1kg+/-25gm", 170.00, "Vegetables"),
+            GroceryItem("Kacha Morich (Green Chilli) 75gm+/-12gm", 75.00, "Vegetables"),
+            GroceryItem("Apples 1kg+/-50gm", 330.00, "Fruits"),
+            GroceryItem("Lal Angur (Red Grapes) 250gm+/-12gm", 139.00, "Fruits"),
+            GroceryItem("Green Apples 1kg+/-50gm", 359.00, "Fruits"),
+            GroceryItem("Daab (Green Coconut)", 130.00, "Fruits"),
+            GroceryItem("Beef 1kg+/-50gm", 700.00, "Meat"),
+            GroceryItem("Broiler Chicken Skin on 1kg+/-50gm", 289.00, "Meat"),
+            GroceryItem("Broiler Chicken Skin Off 1kg+/-50gm", 319.00, "Meat"),
+            GroceryItem("Mutton 1kg+/-50gm", 950.00, "Meat"),
+            GroceryItem("Mango Juice 1 litre", 70.00, "Beverages"),
+            GroceryItem("Bread Small One", 50.00, "Beverages"),
+            GroceryItem("Milk 1 Litre", 90.00, "Beverages"),
+            GroceryItem("Rupchanda Oil 1 litre", 170.00, "Beverages"),
+            GroceryItem("Telapiya Fish Processed 1kg+/-50gm", 300.00, "Fish"),
+            GroceryItem("Pabda Fish Medium 1kg+/-30gm", 350.00, "Fish"),
+            GroceryItem("Silver Carp Fish 1kg+/-50gm", 250.00, "Fish"),
+            GroceryItem("Whole Hilsha Fish 500gm+/-40gm", 700.00, "Fish")
+        ]
+        self.cart = []
+
+
+
+    # View Items by Category
+    def view_items(self):
+        print("\nChoose a category to view:")
+        print("1. View Vegetables")
+        print("2. View Fruits")
+        print("3. View Fish")
+        print("4. View Meat")
+        print("5. View Beverages")
+        choice = input("Enter your choice (1-5): ")
+
+        if choice == "1":
+            self.view_vegetables()
+        elif choice == "2":
+            self.view_fruits()
+        elif choice == "3":
+            self.view_fish()
+        elif choice == "4":
+            self.view_meat()
+        elif choice == "5":
+            self.view_beverages()
+        else:
+            print("Invalid choice.")
+
+
+
+    # View Vegetables Function
+    def view_vegetables(self):
+        print("\nVegetables:")
+        for index, item in enumerate(self.inventory):
+            if item.category == "Vegetables":
+                print(f"{index + 1}). {item.name} - ৳{item.price:.2f}")
+
+
+
+    # View Fruits Function
+    def view_fruits(self):
+        print("\nFruits:")
+        for index, item in enumerate(self.inventory):
+            if item.category == "Fruits":
+                print(f"{index + 1}). {item.name} - ৳{item.price:.2f}")
+
+
+
+    # View Fish Function
+    def view_fish(self):
+        print("\nFish:")
+        for index, item in enumerate(self.inventory):
+            if item.category == "Fish":
+                print(f"{index + 1}). {item.name} - ৳{item.price:.2f}")
+
+
+
+    # View Meat Function
+    def view_meat(self):
+        print("\nMeat:")
+        for index, item in enumerate(self.inventory):
+            if item.category == "Meat":
+                print(f"{index + 1}). {item.name} - ৳{item.price:.2f}")
+
+
+
+    # View Beverages Function
+    def view_beverages(self):
+        print("\nBeverages:")
+        for index, item in enumerate(self.inventory):
+            if item.category == "Beverages":
+                print(f"{index + 1}). {item.name} - ৳{item.price:.2f}")
+
+
+
+    # Add Item to Cart Function
+    def add_to_cart(self, item_number, quantity):
+        if 0 < item_number <= len(self.inventory):
+            item = self.inventory[item_number - 1]
+            self.cart.append((item, quantity))
+            print(f"Added {quantity} * {item.name} to your cart.")
+        else:
+            print("Invalid item number.")
+
+
+
+    # View Cart Function
+    def view_cart(self):
+        if not self.cart:
+            print("Your cart is empty.")
+        else:
+            print("\nYour Cart:")
+            total_cost = 0
+            for item, quantity in self.cart:
+                cost = item.price * quantity
+                print(f"{quantity} * {item.name} - ৳{cost:.2f}")
+                total_cost += cost
+            print(f"Total Cost: ৳{total_cost:.2f}")
+
+
+
+    # Checkout Function
+    def checkout(self):
+        if not self.cart:
+            print("Your cart is empty. Add items before checkout.")
+        else:
+            self.view_cart()
+            print("\nProceeding to checkout...")
+            print("Thank You For Your Purchase!")
+            self.cart = []
+
+
+
+# Main Function
+def main():
+    store = GroceryStore()
+    while True:
+        print("\n1. View Items")
+        print("2. Add to Cart")
+        print("3. View Cart")
+        print("4. Checkout")
+        print("5. Exit")
+        choice = input("Enter Your Choice (1-5): ")
+
+        if choice == "1":
+            store.view_items()
+        elif choice == "2":
+            store.view_items()  # Show items before adding to cart
+            item_number = int(input("Enter item number to add to cart: "))
+            quantity = int(input("Enter Quantity: "))
+            store.add_to_cart(item_number, quantity)
+        elif choice == "3":
+            store.view_cart()
+        elif choice == "4":
+            store.checkout()
+        elif choice == "5":
+            print("Thank You for using the Grocery Delivery System.")
+            break
+        else:
+            print("Invalid Choice, Please try again.")
+
+if __name__ == "__main__":
+    main()
